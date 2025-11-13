@@ -1,0 +1,7 @@
+# Project specific
+/dataset
+/output
+
+# PyCharm
+.DS_Store
+.idea
