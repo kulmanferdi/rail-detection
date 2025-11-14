@@ -91,7 +91,7 @@ def calculate_tcom(binary_image_path, reference_x=None):
 
 
 def visualize_tcom(binary_image_path, tcom_values, y_positions, centerline_x,
-                   save_path='tcom_analysis.png'):
+                   save_path='output/tcom_analysis.png'):
     """Visualize TCOM results"""
     bev = cv2.imread(binary_image_path, cv2.IMREAD_GRAYSCALE)
     h, w = bev.shape
@@ -143,9 +143,9 @@ def visualize_tcom(binary_image_path, tcom_values, y_positions, centerline_x,
 
 
 if __name__ == "__main__":
-    tcom, y_pos, centerline = calculate_tcom('data/web/bev_binary.png')
+    tcom, y_pos, centerline = calculate_tcom('output/bev_binary.png')
 
-    visualize_tcom('data/web/bev_binary.png', tcom, y_pos, centerline)
+    visualize_tcom('output/bev_binary.png', tcom, y_pos, centerline)
 
     np.savez('tcom_data.npz',
              tcom=tcom,

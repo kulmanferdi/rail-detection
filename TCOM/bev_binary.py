@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-bev = cv2.imread('data/web/birdseye_view_output.png')
+bev = cv2.imread('output/birdseye_view_output.png')
 
 gray = cv2.cvtColor(bev, cv2.COLOR_BGR2GRAY)
 
@@ -30,7 +30,7 @@ for idx in largest_idx:
 
 clean = cv2.dilate(clean, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)), iterations=1)
 
-cv2.imwrite('data/web/bev_binary.png', clean)
+cv2.imwrite('output/bev_binary.png', clean)
 plt.imshow(clean, cmap='gray')
 plt.title("Binary Rails")
 plt.axis('off')

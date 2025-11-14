@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-bev = cv2.imread('data/web/bev_binary.png', cv2.IMREAD_GRAYSCALE)
+bev = cv2.imread('output/bev_binary.png', cv2.IMREAD_GRAYSCALE)
 
 kernel = np.ones((3, 3), np.uint8)
 bev_clean = cv2.morphologyEx(bev, cv2.MORPH_CLOSE, kernel)
