@@ -1,5 +1,6 @@
 # Project specific
 /dataset
+/data
 /output
 
 # PyCharm
