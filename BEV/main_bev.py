@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+SHRINK = 0.4
 
 def warp_trapezoids_to_birds_eye(image, num_strips=20):
     """
@@ -9,7 +10,7 @@ def warp_trapezoids_to_birds_eye(image, num_strips=20):
     h, w = image.shape[:2]
 
     # Define ROI (middle portion of the image)
-    roi_top = int(h * 0.20/0.40)
+    roi_top = int(h * 0.20/SHRINK)
     roi_bottom = h
     roi_left = int(w * 0.15)
     roi_right = int(w * 0.85)
@@ -20,7 +21,7 @@ def warp_trapezoids_to_birds_eye(image, num_strips=20):
     warped = np.zeros_like(roi)
 
     # Parameters controlling trapezoid narrowing
-    top_shrink = 0.4  # fraction shrink at top (40%)
+    top_shrink = SHRINK  # fraction shrink at top (40%)
 
     y_start = 0
     for i in range(num_strips):
@@ -62,7 +63,7 @@ def warp_trapezoids_to_birds_eye(image, num_strips=20):
 
 # Example usage
 if __name__ == "__main__":
-    img = cv2.imread("dataset/web/rail-test1.jpg")
+    img = cv2.imread("dataset/web/sample.jpg")
     birds_eye = warp_trapezoids_to_birds_eye(img, num_strips=30)
 
     cv2.imshow("Original", img)

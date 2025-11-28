@@ -2,7 +2,7 @@ import birdseyeview
 import cv2
 import matplotlib.pyplot as plt
 
-image = cv2.imread('../dataset/web/rail-test1.jpg')
+image = cv2.imread('../dataset/web/sample.jpg')
 
 bev_image = birdseyeview.birdseye_view(image)
 
