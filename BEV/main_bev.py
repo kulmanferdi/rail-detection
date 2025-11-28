@@ -63,7 +63,7 @@ def warp_trapezoids_to_birds_eye(image, num_strips=20):
 
 # Example usage
 if __name__ == "__main__":
-    img = cv2.imread("dataset/web/sample.jpg")
+    img = cv2.imread("dataset/sample.jpg")
     birds_eye = warp_trapezoids_to_birds_eye(img, num_strips=30)
 
     cv2.imshow("Original", img)
