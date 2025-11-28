@@ -1,7 +1,7 @@
 # Project specific
-/dataset
 /data
 /output
+/dataset
 
 # PyCharm
 .DS_Store
