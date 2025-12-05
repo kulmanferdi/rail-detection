@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def birds_eye_from_masks(original, rail_mask, centerline_mask, num_strips=30, offset=25):
+def birds_eye_from_masks(original, rail_mask, centerline_mask, num_strips=5, offset=50):
     h, w = rail_mask.shape[:2]
     warped = np.zeros_like(original)
 
@@ -30,7 +30,7 @@ def birds_eye_from_masks(original, rail_mask, centerline_mask, num_strips=30, of
     y_start = 0
     for i in range(num_strips):
         y1 = int(i * roi_h / num_strips)
-        y2 = int((i+1) * roi_h / num_strips)
+        y2 = min(int((i+1) * roi_h / num_strips), h-1)
 
         if left_rail[y1] is None or right_rail[y1] is None: continue
         if left_rail[y2] is None or right_rail[y2] is None: continue
@@ -64,9 +64,9 @@ def birds_eye_from_masks(original, rail_mask, centerline_mask, num_strips=30, of
 
 # Example usage
 if __name__ == "__main__":
-    original = cv2.imread("railway.jpg")
-    rail_mask = cv2.imread("rail_mask.jpg", cv2.IMREAD_GRAYSCALE)
-    centerline_mask = cv2.imread("centerline.jpg", cv2.IMREAD_GRAYSCALE)
+    original = cv2.imread("dataset/osdar/rgb_highres_center/012_1631441453.300000030.png")
+    rail_mask = cv2.imread("dataset/osdar/rgb_highres_center/012_1631441453.300000030.png.mask_segment.png", cv2.IMREAD_GRAYSCALE)
+    centerline_mask = cv2.imread("dataset/osdar/rgb_highres_center/012_1631441453.300000030.png.mask_center.png", cv2.IMREAD_GRAYSCALE)
 
     birds_eye = birds_eye_from_masks(original, rail_mask, centerline_mask)
 
