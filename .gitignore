@@ -3,6 +3,7 @@
 /output
 TOPIC.md
 /BEV/dataset/osdar
+/BEV/output_birds_eye
 # PyCharm
 .DS_Store
 .idea

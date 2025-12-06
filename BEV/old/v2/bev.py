@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
+import os
+import glob
 
-def birds_eye_from_masks(original, rail_mask, centerline_mask, num_strips=5, offset=50):
+def birds_eye_from_masks(original, rail_mask, centerline_mask, num_strips=4, offset=-10):
     h, w = rail_mask.shape[:2]
     warped = np.zeros_like(original)
 
@@ -62,14 +64,38 @@ def birds_eye_from_masks(original, rail_mask, centerline_mask, num_strips=5, off
     return warped
 
 
-# Example usage
+# ---------- Batch Processing ----------
 if __name__ == "__main__":
-    original = cv2.imread("dataset/osdar/rgb_highres_center/012_1631441453.300000030.png")
-    rail_mask = cv2.imread("dataset/osdar/rgb_highres_center/012_1631441453.300000030.png.mask_segment.png", cv2.IMREAD_GRAYSCALE)
-    centerline_mask = cv2.imread("dataset/osdar/rgb_highres_center/012_1631441453.300000030.png.mask_center.png", cv2.IMREAD_GRAYSCALE)
+    input_folder = "dataset/osdar/fire/rgb_highres_center"
+    output_folder = "output_birds_eye"
+    os.makedirs(output_folder, exist_ok=True)
 
-    birds_eye = birds_eye_from_masks(original, rail_mask, centerline_mask)
+    # Find all original images (assuming they end with .png and not .mask_*.png)
+    originals = glob.glob(os.path.join(input_folder, "*.png"))
+    originals = [f for f in originals if ".mask_" not in f]
 
-    cv2.imshow("Birds Eye View", birds_eye)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    for orig_path in originals:
+        base = os.path.splitext(orig_path)[0]
+
+        rail_path = base + ".mask_segment.png"
+        center_path = base + ".mask_center.png"
+        track_path = base + ".mask_track.png"
+
+        # Load images
+        original = cv2.imread(orig_path)
+        rail_mask = cv2.imread(rail_path, cv2.IMREAD_GRAYSCALE)
+        centerline_mask = cv2.imread(center_path, cv2.IMREAD_GRAYSCALE)
+        track_mask = cv2.imread(track_path, cv2.IMREAD_GRAYSCALE)
+
+        if None in (original, rail_mask, centerline_mask, track_mask):
+            print(f"Skipping {orig_path}: missing one or more masks")
+            continue
+
+        # Compute bird’s eye
+        birds_eye = birds_eye_from_masks(original, rail_mask, centerline_mask)
+
+        # Save result
+        out_path = os.path.join(output_folder, os.path.basename(base) + "_birds_eye.png")
+        cv2.imwrite(out_path, birds_eye)
+        print(f"Processed {orig_path} → {out_path}")
+
