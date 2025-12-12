@@ -2,8 +2,11 @@
 /data
 /output
 TOPIC.md
+
+# BEV specific
 /BEV/dataset/osdar
 /BEV/output_birds_eye
-# PyCharm
+
+# PyCharm for Mac
 .DS_Store
 .idea
