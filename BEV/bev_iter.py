@@ -1,7 +1,7 @@
-import cv2
-import numpy as np
 import os
 import glob
+import cv2
+import numpy as np
 
 def extract_rail_edges(rail_mask):
     h, w = rail_mask.shape
